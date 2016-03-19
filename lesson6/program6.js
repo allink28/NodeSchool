@@ -7,7 +7,7 @@ var mymodule = require('./mymodule'); //or ./mymodule.js
 var dir = process.argv[2];
 var fileExt = process.argv[3];
 
-var data = mymodule(dir, fileExt, function(err, files) {
+mymodule(dir, fileExt, function(err, files) {
 	if (err) {
 		console.log("Error: " + err);
 	} else {
@@ -15,4 +15,4 @@ var data = mymodule(dir, fileExt, function(err, files) {
 			console.log(file);
 		});
 	}
-}); 
+});
