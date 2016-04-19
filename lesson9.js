@@ -9,7 +9,13 @@
  length, just the data as a String; one line per URL. The catch is that you
  must print them out in the same order as the URLs are provided to you as
  command-line arguments.
+
+ -Allen's Note: This solution uses buffer list piping to wait until the data is finished.
+ 	-I'm not fully happy with this solution and will create another one using the http on 'end' event.
 */
+/* http module Documentation
+ * file://C:\Users\preville\AppData\Roaming\npm\node_modules\learnyounode\node_apidoc\http.html
+ */
 /* Buffer list
  * http://npm.im/bl
  * To install: npm install bl
@@ -19,20 +25,34 @@
 var bufferlist = require('bl');
 var http = require('http');
 
-var url1 = process.argv[2];
-var url2 = process.argv[3];
-var url3 = process.argv[4];
-var requests = 0;
+var urls = [process.argv[2], process.argv[3], process.argv[4]];
+var completedCalls = 0;
+var results = [];
 
-var callback = function(err, requests, data) {
-	var id = ++requests;
-	if (err) {
-		console.error(err);
-	} else if () {
-		console.log(data.toString());
-	}
+// console.log("Start: " + urls );
+
+var collectResponses = function(i) {
+	// console.log("calling get");
+	http.get(urls[i], function(response) {
+		response.pipe(bufferlist(function (err, data) {
+			if (err) {
+				console.error(err);
+			}
+			results[i] = data.toString();
+			completedCalls++;
+			// console.log("Completed calls: " + completedCalls);
+			if (completedCalls == 3) {
+				results.forEach(function(entry) {
+					console.log(entry);
+				})
+			}
+		}))
+		// response.on('end', function() {
+		// 	if (count )
+		// }
+	})
 }
 
-http.get(url1, callback);
-http.get(url2, callback);
-http.get(url3, callback);
+for (var j = 0; j < 3; j++) { //using piping
+	collectResponses(j);
+}
