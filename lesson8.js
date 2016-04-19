@@ -9,8 +9,11 @@
  of characters received from the server. The second line should contain the
  complete String of characters sent by the server.
 */
+/* http module Documentation
+ *  file://C:\Users\preville\AppData\Roaming\npm\node_modules\learnyounode\node_apidoc\http.html
+ */
 /* Buffer list
- * http://npm.im/bl  
+ * http://npm.im/bl
  * To install: npm install bl
  * Location: file://C:\Users\preville\AppData\Roaming\npm\node_modules\learnyounode\node_modules\bl
  * Documentation: file://C:\Users\preville\AppData\Roaming\npm\node_modules\learnyounode\docs\bl.html
